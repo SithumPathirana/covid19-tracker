@@ -13,6 +13,9 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
+  const [mapZoom, setMapZoom] = useState(13);
+  const [mapCountries, setMapCountires] = useState([]);
 
   useEffect(() => {
     async function fetchCountries() {
@@ -23,6 +26,7 @@ function App() {
         value: item.countryInfo.iso3,
       }));
       setCountries(data);
+      setMapCountires(response.data);
       setTableData(sortData(response.data));
     }
 
@@ -31,6 +35,13 @@ function App() {
 
   const handleCountrySelect = (data) => {
     setCountryInfo(data);
+    if (data.countryInfo) {
+      setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+      setMapZoom(4);
+    } else {
+      setMapCenter([51.505, -0.09]);
+      setMapZoom(3);
+    }
   };
 
   return (
@@ -59,14 +70,16 @@ function App() {
           ></InfoBox>
         </div>
 
-        <Map></Map>
+        <Map countries={mapCountries} center={mapCenter} zoom={mapZoom}></Map>
       </div>
       <Card className="app-right">
         <CardContent>
           <h3> Live Cases by Country</h3>
           <Table tableData={tableData}></Table>
-          <h2> Worldwide new cases</h2>
-          <LineGraph> </LineGraph>
+          <div className="graph">
+            <h2> Worldwide new cases</h2>
+            <LineGraph type="cases"> </LineGraph>
+          </div>
         </CardContent>
       </Card>
     </div>
