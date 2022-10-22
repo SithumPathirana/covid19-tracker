@@ -70,7 +70,12 @@ function App() {
           ></InfoBox>
         </div>
 
-        <Map countries={mapCountries} center={mapCenter} zoom={mapZoom}></Map>
+        <Map
+          countries={mapCountries}
+          caseType="cases"
+          center={mapCenter}
+          zoom={mapZoom}
+        ></Map>
       </div>
       <Card className="app-right">
         <CardContent>

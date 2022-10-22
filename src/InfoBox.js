@@ -1,6 +1,7 @@
 import React from 'react';
 import './InfoBox.css';
 import { Card, CardContent, Typography } from '@mui/material';
+import { prettyPrintNum } from './util';
 
 function InfoBox({ title, cases, total }) {
   return (
@@ -10,10 +11,10 @@ function InfoBox({ title, cases, total }) {
           {title}
         </Typography>
 
-        <h2 className="info-box-cases">{cases}</h2>
+        <h2 className="info-box-cases">{prettyPrintNum(cases)}</h2>
 
         <Typography color={'#3E5060'} className="info-box-total">
-          {total} Total
+          {prettyPrintNum(total)} Total
         </Typography>
       </CardContent>
     </Card>
